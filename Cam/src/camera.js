@@ -36,32 +36,36 @@ export default function Cam() {
       const data = await camRef.current.takePictureAsync();
       setCapturedPhoto(data.uri);
       setOpen(true);
-
-      //simular um formulario
+  
+      // Exemplo de dados do evento
       const form = {
-        nome:"Evento teste",
-        descricao:"Evento teste Image Mobile",
-        data_hora:"2025-09-03 09:00:00",
-        local:"Franca",
-        fk_id_organizador:1
-      }
-      try{
-        const response = await createEvento(form,data.uri)
-        console.log("Evento criado", response.data.message)
+        nome: "Evento teste",
+        descricao: "Descrição do evento",
+        data_hora: "2025-08-15 19:00:00",
+        local: "São Paulo",
+        fk_id_organizador: 1,
+      };
+  
+      try {
+        const response = await createEvento(form, data.uri);
+        console.log("Evento criado:", response.data);
         Alert.alert(response.data.message)
-      }catch (error){
-        console.log("Error", error.response.data.error)
+      } catch (error) {
+        console.error("Erro ao criar evento:", error);
       }
     }
   }
+        
+      
 
   return (
     <View style={styles.container}>
       <CameraView style={styles.camera} ref={camRef} >
-        <TouchableOpacity style={styles.buttonTake} onPress={takePicture}>
+        
+      </CameraView>
+      <TouchableOpacity style={styles.buttonTake} onPress={takePicture}>
           <MaterialIcons name="camera" size={60} color="white" />
         </TouchableOpacity>
-      </CameraView>
 
       {capturedPhoto && (
         <Modal animationType="slide" transparent={true} visible={open}>
